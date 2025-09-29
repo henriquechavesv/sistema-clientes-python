@@ -1,51 +1,49 @@
 import os
 
-ARQ = 'clientes.txt'
+ARQ = 'clientes.txt'  # arquivo de dados
 
 def cadastrar_cliente():
+    """Cadastra um novo cliente no arquivo"""
     while True:
         nome = input('Digite o nome: ').strip()
         email = input('Digite o email: ').strip()
         telefone = input('Digite o telefone: ').strip()
 
-        # validações simples
+        # Validação básica dos campos
         if not nome or not email or not telefone or '@' not in email:
             print('Dados inválidos. Tente novamente.\n')
             continue
 
+        # Gravação em modo append (não sobrescreve os existentes)
         with open(ARQ, 'a') as arq:
             arq.write(f'{nome} - {email} - {telefone}\n')
 
         print('Cliente cadastrado com sucesso!\n')
-        return  # volta ao menu
+        return  # encerra a função e retorna ao menu
 
 def listar_clientes():
-    # 1) Verificar se arquivo existe e não está vazio
+    """Lista todos os clientes cadastrados"""
     if not os.path.exists(ARQ) or os.path.getsize(ARQ) == 0:
         print("Não existem clientes cadastrados.\nSelecione a opção '1' para cadastrar o primeiro.\n")
         return
 
-    # 2) Exibir clientes
     print('=== Sistema de Clientes ===\nClientes cadastrados:\n')
     with open(ARQ, 'r') as arq:
         for cliente in arq:
-            print(cliente.strip())   # strip remove o \n extra
-    print()  # linha em branco no final
+            print(cliente.strip())  # .strip() remove o \n no final
+    print()
 
 def buscar_cliente():
-    # 1) Se arquivo não existe ou está vazio
+    """Busca clientes pelo nome (case-insensitive, busca parcial)"""
     if not os.path.exists(ARQ) or os.path.getsize(ARQ) == 0:
         print("Não existem clientes cadastrados.\n")
         return
 
-    # 2) Perguntar nome
     nome = input('Pesquisar nome do cliente: ').strip().lower()
 
-    # 3) Procurar linha a linha
     with open(ARQ, 'r') as arq:
         encontrados = [linha.strip() for linha in arq if nome in linha.lower()]
 
-    # 4) Mostrar resultados
     if encontrados:
         print("\nResultados da busca:")
         for cliente in encontrados:
@@ -53,8 +51,9 @@ def buscar_cliente():
         print()
     else:
         print('Cliente não encontrado. Para cadastrá-lo, selecione a opção 1.\n')
-                        
+
 def excluir_cliente():
+    """Exclui cliente pelo nome (busca exata)"""
     if not os.path.exists(ARQ) or os.path.getsize(ARQ) == 0:
         print("Não existem clientes cadastrados.\n")
         return
@@ -79,6 +78,7 @@ def excluir_cliente():
         print('Cliente não encontrado\n')
 
 def menu():
+    """Menu principal"""
     while True:
         print('=== Sistema de Clientes ===')
         print('1 - Cadastrar cliente')
@@ -101,4 +101,6 @@ def menu():
             break
         else:
             print('Opção inválida!\n')
-menu()
+
+if __name__ == '__main__':
+    menu()
