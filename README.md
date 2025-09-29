@@ -12,6 +12,7 @@ Mais do que um exercício, ele mostrou na prática como algo simples pode resolv
 Tudo isso rodando direto no **terminal** e salvando os dados em `clientes.txt`.
 
 ## 💡 Problemas que pode resolver
+- Cadastrar e consultar registros sem depender de planilhas manuais.
 - Organizar informações de forma simples em pequenas empresas
 - Criar logs automáticos de execução em outros sistemas
 
